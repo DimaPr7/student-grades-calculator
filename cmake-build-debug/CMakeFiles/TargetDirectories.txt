@@ -1,0 +1,3 @@
+C:/Users/User/CLionProjects/grades_calculator/cmake-build-debug/CMakeFiles/grades_calculator.dir
+C:/Users/User/CLionProjects/grades_calculator/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/User/CLionProjects/grades_calculator/cmake-build-debug/CMakeFiles/rebuild_cache.dir
