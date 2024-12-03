@@ -17,6 +17,8 @@ public:
     void SetName(string N);
     string GetName();
     void printPerson();
+
+    void calculateGrade();
 };
 
 Person::Person() {
@@ -44,6 +46,13 @@ Person::~Person() {
 }
 
 void Person::SetName(string N) { name = N; }
+void Person::calculateGrade(){
+    double sum = exam;
+    for (double hw : HW){
+        sum += hw;
+    }
+    grade = sum / (HW.size() + 1);
+}
 string Person::GetName() { return name; }
 void Person::printPerson() {
     cout << name << " " << surname << " " << grade << endl;
@@ -53,7 +62,7 @@ int main(){
     Person A;
     A.printPerson();
     vector<Person> arr;
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 1; i++) {
         cout << "Please input student name and surname: ";
         string TN, TS;
         cin >> TN >> TS;
@@ -71,7 +80,9 @@ int main(){
         double TE;
         cin >> TE;
 
-        arr.push_back({TN, TS, THW, TE, 0});
+        Person student(TN, TS, THW, TE, 0);
+        student.calculateGrade();
+        arr.push_back(student);
     }
 
     for (auto &var : arr) {
