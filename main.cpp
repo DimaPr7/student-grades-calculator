@@ -85,6 +85,8 @@ int main(){
         arr.push_back(student);
     }
 
+    cout << "Name       Surname       Final_Point(Aver.)" << endl;
+    cout << "-------------------------------------------" << endl;
     for (auto &var : arr) {
         var.printPerson();
     }
