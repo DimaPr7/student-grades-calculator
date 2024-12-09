@@ -1,15 +1,3 @@
 # ninja log v6
-22	5479	7549607594440074	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
-5486	5824	7549607649076606	grades_calculator.exe	ef492fa9820e00b2
-20	5722	7549608826033145	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
-5723	5993	7549608883060389	grades_calculator.exe	ef492fa9820e00b2
-45	4999	7549613621385940	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
-5002	5353	7549613670956110	grades_calculator.exe	ef492fa9820e00b2
-89	5595	7553079158532239	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
-5596	6340	7553079213597275	grades_calculator.exe	ef492fa9820e00b2
-56	2817	7553109820839408	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
-2818	3175	7553109848462790	grades_calculator.exe	ef492fa9820e00b2
-43	3346	7553110187579687	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
-3348	3643	7553110220620768	grades_calculator.exe	ef492fa9820e00b2
-31	2919	7553110299438229	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
-2920	3220	7553110328331702	grades_calculator.exe	ef492fa9820e00b2
+14	2511	7554737745306202	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
+2513	3170	7554737770298050	grades_calculator.exe	ef492fa9820e00b2
