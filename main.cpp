@@ -6,7 +6,6 @@
 #include <sstream>
 using namespace std;
 #include "Person.h"
-#include "Person.cpp"
 
 
 void readDataFromFile(const string& filename, vector<Person>& students) {

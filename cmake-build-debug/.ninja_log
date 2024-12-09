@@ -1,3 +1,8 @@
 # ninja log v6
 14	2511	7554737745306202	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
 2513	3170	7554737770298050	grades_calculator.exe	ef492fa9820e00b2
+44	2976	7554769050329377	CMakeFiles/grades_calculator.dir/Person.cpp.obj	4030002bc6a7af7d
+30	3259	7554769050199454	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
+9	3067	7554770049748883	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
+17	3201	7554770049838836	CMakeFiles/grades_calculator.dir/Person.cpp.obj	4030002bc6a7af7d
+3202	3554	7554770081680618	grades_calculator.exe	63bae6e12eb288d2
