@@ -61,6 +61,12 @@ build CMakeFiles/grades_calculator.dir/Person.cpp.obj: CXX_COMPILER__grades_calc
   OBJECT_DIR = CMakeFiles\grades_calculator.dir
   OBJECT_FILE_DIR = CMakeFiles\grades_calculator.dir
 
+build CMakeFiles/grades_calculator.dir/FileUtils.cpp.obj: CXX_COMPILER__grades_calculator_unscanned_Debug C$:/Users/User/CLionProjects/grades_calculator/FileUtils.cpp || cmake_object_order_depends_target_grades_calculator
+  DEP_FILE = CMakeFiles\grades_calculator.dir\FileUtils.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\grades_calculator.dir
+  OBJECT_FILE_DIR = CMakeFiles\grades_calculator.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target grades_calculator
@@ -69,7 +75,7 @@ build CMakeFiles/grades_calculator.dir/Person.cpp.obj: CXX_COMPILER__grades_calc
 #############################################
 # Link the executable grades_calculator.exe
 
-build grades_calculator.exe: CXX_EXECUTABLE_LINKER__grades_calculator_Debug CMakeFiles/grades_calculator.dir/main.cpp.obj CMakeFiles/grades_calculator.dir/Person.cpp.obj
+build grades_calculator.exe: CXX_EXECUTABLE_LINKER__grades_calculator_Debug CMakeFiles/grades_calculator.dir/main.cpp.obj CMakeFiles/grades_calculator.dir/Person.cpp.obj CMakeFiles/grades_calculator.dir/FileUtils.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\grades_calculator.dir

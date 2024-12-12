@@ -5,4 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(grades_calculator main.cpp
         Person.h
-        Person.cpp)
+        Person.cpp
+        FileUtils.h
+        FileUtils.cpp)
