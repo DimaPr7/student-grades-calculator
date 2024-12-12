@@ -11,7 +11,13 @@ using namespace std;
 int main() {
     vector<Person> students;
 
-    readDataFromFile("students", students);
+    try {
+        readDataFromFile("students", students);
+    } catch (const runtime_error& e) {
+        cerr << e.what() << endl;
+        return 1;
+    }
+
 
     char method;
     cout << "Choose grade calculation method (A for Average, M for Median): ";
