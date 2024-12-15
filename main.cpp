@@ -4,9 +4,29 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <random>
 using namespace std;
 #include "Person.h"
 #include "FileUtils.h"
+
+
+void generateRandomData(const string& filename, size_t numStudents) {
+    ofstream file(filename);
+
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<> dis(1.0, 10.0);
+
+    for (size_t i = 0; i < numStudents; ++i) {
+        file << "Name" << i + 1 << " Surname" << i + 1;
+        for (int j = 0; j < 5; ++j) {
+            file << " " << dis(gen);
+        }
+        file << " " << dis(gen) << endl;
+    }
+
+    file.close();}
+
 
 int main() {
     vector<Person> students;
