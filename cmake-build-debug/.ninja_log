@@ -11,3 +11,7 @@
 80	2959	7559837005270282	CMakeFiles/grades_calculator.dir/FileUtils.cpp.obj	819b2da84f5f152c
 59	3259	7559837005050418	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
 3260	3964	7559837037046389	grades_calculator.exe	557c1e3849a6b772
+78	3215	7560673948991633	CMakeFiles/grades_calculator.dir/FileUtils.cpp.obj	819b2da84f5f152c
+52	3581	7560673948811742	CMakeFiles/grades_calculator.dir/Person.cpp.obj	4030002bc6a7af7d
+37	3876	7560673948581877	CMakeFiles/grades_calculator.dir/main.cpp.obj	15ac071d1dcd1e42
+3876	4780	7560673986969904	grades_calculator.exe	557c1e3849a6b772

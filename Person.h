@@ -21,6 +21,7 @@ public:
     string GetName() const;
     void printPerson() const;
     void calculateGrade(char method);
+    const double getGrade() const;
 };
 
 #endif // GRADES_CALCULATOR_PERSON_H

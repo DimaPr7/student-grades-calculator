@@ -43,6 +43,10 @@ void Person::printPerson() const {
     cout << name << " " << surname << " " << grade << endl;
 }
 
+const double Person::getGrade() const {
+    return grade;
+}
+
 void Person::calculateGrade(char method) {
     if (method == 'A') {
         double sum = accumulate(HW.begin(), HW.end(), exam);

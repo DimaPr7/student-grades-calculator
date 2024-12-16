@@ -47,13 +47,18 @@ int main() {
         student.calculateGrade(method);
     }
 
-    cout << left << setw(12) << "Name" << setw(12) << "Surname"
-         << "Final Grade" << endl;
-    cout << "-------------------------------------------" << endl;
-
-    for (const auto& student : students) {
-        student.printPerson();
+    ofstream passedFile("passed_students"), failedFile("failed_students");
+    for (const auto& student : students){
+        if (student.getGrade() >= 5.0) {
+            passedFile << student.GetName() << " " << student.getGrade() << endl;
+        } else {
+            failedFile << student.GetName() << " " << student.getGrade() << endl;
+        }
     }
+    passedFile.close();
+    failedFile.close();
+
+    cout << "Data processing completed!" << endl;
 
     return 0;
 }
