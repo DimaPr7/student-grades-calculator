@@ -3,29 +3,31 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <chrono>
 #include <sstream>
 #include <random>
 using namespace std;
 #include "Person.h"
 #include "FileUtils.h"
 
+auto start = std::chrono::high_resolution_clock::now();
+void generateRandomData(const std::string& filename, size_t numStudents) {
+    std::ofstream file(filename);
 
-void generateRandomData(const string& filename, size_t numStudents) {
-    ofstream file(filename);
-
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_real_distribution<> dis(1.0, 10.0);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(1.0, 10.0);
 
     for (size_t i = 0; i < numStudents; ++i) {
         file << "Name" << i + 1 << " Surname" << i + 1;
         for (int j = 0; j < 5; ++j) {
             file << " " << dis(gen);
         }
-        file << " " << dis(gen) << endl;
+        file << " " << dis(gen) << std::endl;
     }
 
-    file.close();}
+    file.close();
+}
 
 
 int main() {
@@ -57,6 +59,9 @@ int main() {
     }
     passedFile.close();
     failedFile.close();
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    std::cout << "Time taken: " << duration.count() << " milliseconds" << std::endl;
 
     cout << "Data processing completed!" << endl;
 
