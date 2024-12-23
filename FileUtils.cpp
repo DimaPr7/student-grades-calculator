@@ -3,20 +3,17 @@
 #include <fstream>
 #include <sstream>
 
-using namespace std;
-
-void readDataFromFile(const string& filename, vector<Person>& students) {
-    ifstream file(filename);
+void readDataFromFile(const std::string& filename, std::vector<Person>& students) {
+    std::ifstream file(filename);
     if (!file) {
-        cerr << "Error: Could not open the file!" << endl;
-        return;
+        throw std::runtime_error("Error: Could not open the file!");
     }
 
-    string line;
-    while (getline(file, line)) {
-        stringstream ss(line);
-        string name, surname;
-        vector<double> HW;
+    std::string line;
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string name, surname;
+        std::vector<double> HW;
         double exam;
 
         ss >> name >> surname;
