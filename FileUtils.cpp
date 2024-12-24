@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <random>
 
 void readDataFromFile(const std::string& filename, std::vector<Person>& students) {
     std::ifstream file(filename);
@@ -28,4 +29,31 @@ void readDataFromFile(const std::string& filename, std::vector<Person>& students
         students.push_back(student);
     }
     file.close();
+}
+
+void generateRandomData(const std::string& filename, size_t numStudents) {
+    std::ofstream file(filename);
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(1.0, 10.0);
+
+    for (size_t i = 0; i < numStudents; ++i) {
+        file << "Name" << i + 1 << " Surname" << i + 1;
+        for (int j = 0; j < 5; ++j) {
+            file << " " << dis(gen);
+        }
+        file << " " << dis(gen) << std::endl;
+    }
+
+    file.close();
+}
+
+void generateFiles() {
+    std::vector<size_t> sizes = {10000, 100000, 1000000};
+    for (size_t size : sizes) {
+        std::string filename = "students_" + std::to_string(size) + ".txt";
+        std::cout << "Generating file: " << filename << " with " << size << " records." << std::endl;
+        generateRandomData(filename, size);
+    }
 }
