@@ -38,50 +38,48 @@ void generateRandomData(const std::string& filename, size_t numStudents) {
     std::cout << "Random data generated in file: " << filename << std::endl;
 }
 
-template <typename Container>
-void strategy1(const Container& students, Container& passed, Container& failed) {
-    std::partition_copy(
-            students.begin(),
-            students.end(),
-            std::back_inserter(passed),
-            std::back_inserter(failed),
-            [](const Person& student) { return student.getGrade() >= 5.0; });
-}
-
 int main() {
-    vector<Person> students;
+    const std::string dataFile = "students.txt";
+    size_t studentCount = 1000;
+    generateRandomData(dataFile, studentCount);
+
+    vector<Person> studentsVector;
+    list<Person> studentsList;
+    deque<Person> studentsDeque;
 
     try {
-        readDataFromFile("students", students);
+        readDataFromFile(dataFile, studentsVector);
     } catch (const runtime_error& e) {
-        cerr << e.what() << endl;
+        cerr << "Error reading data: " << e.what() << endl;
         return 1;
     }
 
+    vector<Person> passedVector, failedVector;
+    list<Person> passedList, failedList;
+    deque<Person> passedDeque, failedDeque;
 
-    char method;
-    cout << "Choose grade calculation method (A for Average, M for Median): ";
-    cin >> method;
-
-    for (auto& student : students) {
-        student.calculateGrade(method);
-    }
-
-    ofstream passedFile("passed_students"), failedFile("failed_students");
-    for (const auto& student : students){
-        if (student.getGrade() >= 5.0) {
-            passedFile << student.GetName() << " " << student.getGrade() << endl;
-        } else {
-            failedFile << student.GetName() << " " << student.getGrade() << endl;
-        }
-    }
-    passedFile.close();
-    failedFile.close();
+    auto start = std::chrono::high_resolution_clock::now();
+    strategy1(studentsVector, passedVector, failedVector);
     auto end = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::cout << "Time taken: " << duration.count() << " milliseconds" << std::endl;
+    cout << "Vector Strategy 1 Time: "
+         << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+         << " ms" << endl;
 
-    cout << "Data processing completed!" << endl;
+    start = std::chrono::high_resolution_clock::now();
+    strategy1(studentsList, passedList, failedList);
+    end = std::chrono::high_resolution_clock::now();
+    cout << "List Strategy 1 Time: "
+         << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+         << " ms" << endl;
+
+    start = std::chrono::high_resolution_clock::now();
+    strategy1(studentsDeque, passedDeque, failedDeque);
+    end = std::chrono::high_resolution_clock::now();
+    cout << "Deque Strategy 1 Time: "
+         << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+         << " ms" << endl;
+
+    cout << "Data loaded successfully!" << endl;
 
     return 0;
 }
