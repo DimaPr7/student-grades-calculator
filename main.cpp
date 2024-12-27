@@ -1,18 +1,26 @@
 #include <iostream>
-#include <iomanip>
-#include <vector>
 #include <fstream>
 #include <string>
-#include <chrono>
+#include <vector>
+#include <list>
+#include <deque>
 #include <sstream>
 #include <random>
-using namespace std;
+#include <chrono>
+#include <algorithm>
+#include <iomanip>
 #include "Person.h"
 #include "FileUtils.h"
+
+using namespace std;
 
 auto start = std::chrono::high_resolution_clock::now();
 void generateRandomData(const std::string& filename, size_t numStudents) {
     std::ofstream file(filename);
+
+    if (!file) {
+        throw std::runtime_error("Failed to open file for writing: " + filename);
+    }
 
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -27,8 +35,18 @@ void generateRandomData(const std::string& filename, size_t numStudents) {
     }
 
     file.close();
+    std::cout << "Random data generated in file: " << filename << std::endl;
 }
 
+template <typename Container>
+void strategy1(const Container& students, Container& passed, Container& failed) {
+    std::partition_copy(
+            students.begin(),
+            students.end(),
+            std::back_inserter(passed),
+            std::back_inserter(failed),
+            [](const Person& student) { return student.getGrade() >= 5.0; });
+}
 
 int main() {
     vector<Person> students;
