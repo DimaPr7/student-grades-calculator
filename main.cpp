@@ -1,102 +1,110 @@
 #include <iostream>
-#include <chrono>
+#include <fstream>
+#include <string>
 #include <vector>
+#include <list>
+#include <deque>
+#include <sstream>
+#include <random>
+#include <chrono>
 #include <algorithm>
+#include <iomanip>
+#include "Person.h"
+#include "FileUtils.h"
 
 using namespace std;
 
-class Person {
-private:
-    string name, surname;
-    vector<double> HW;
-    double exam;
-    double grade;
-public:
-    Person();
-    Person(string A, string B, vector<double> C, double D, double E);
-    ~Person();
-    void SetName(string N);
-    string GetName();
-    void printPerson();
-    void calculateGrade(char choice);
-};
-
-Person::Person() : name("test"), surname("test"), exam(0), grade(0) {}
-
-Person::Person(string A, string B, vector<double> C, double D, double E)
-        : name(A), surname(B), HW(C), exam(D), grade(E) {}
-
-Person::~Person() {}
-
-void Person::SetName(string N) {
-    name = N;
+template <typename Container>
+void strategy1(const Container& students, Container& passed, Container& failed) {
+    std::copy_if(students.begin(), students.end(), std::back_inserter(passed),
+                 [](const Person& student) { return student.getGrade() >= 5.0; });
+    std::copy_if(students.begin(), students.end(), std::back_inserter(failed),
+                 [](const Person& student) { return student.getGrade() < 5.0; });
 }
 
-string Person::GetName() {
-    return name;
-}
-
-void Person::printPerson() {
-    cout << name << " " << surname << " " << grade << endl;
-}
-
-void Person::calculateGrade(char choice) {
-    double final_grade;
-    HW.push_back(exam);
-
-    if (choice == 'A') {
-        double sum = 0;
-        for (double hw : HW) {
-            sum += hw;
-        }
-        final_grade = sum / HW.size();
-    } else if (choice == 'M') {
-        sort(HW.begin(), HW.end());
-        size_t size = HW.size();
-        if (size % 2 == 0) {
-            final_grade = (HW[size / 2 - 1] + HW[size / 2]) / 2.0;
-        } else {
-            final_grade = HW[size / 2];
-        }
-    }
-    grade = final_grade;
+template <typename Container>
+void strategy2(Container& students, Container& failed) {
+    auto it = std::remove_if(students.begin(), students.end(),
+                             [&](const Person& student) {
+                                 if (student.getGrade() < 5.0) {
+                                     failed.push_back(student);
+                                     return true;
+                                 }
+                                 return false;
+                             });
+    students.erase(it, students.end());
 }
 
 int main() {
-    vector<Person> arr;
-    for (int i = 0; i < 1; i++) {
-        cout << "Please input student name and surname: ";
-        string TN, TS;
-        cin >> TN >> TS;
+    vector<Person> students;
+    const size_t numStudents = 1000000;
+    const string filename = "students.txt";
 
-        cout << "Please input student HW points:" << endl;
-        vector<double> THW;
-        double n;
-        while (true) {
-            cout << "Enter points for homework: ";
-            cin >> n;
-            if (n < 0) break;
-            THW.push_back(n);
-        }
-
-        cout << "Please input student Final Exam points: ";
-        double TE;
-        cin >> TE;
-
-        char choice;
-        cout << "Choose grade calculation method (A for Average, M for Median): ";
-        cin >> choice;
-
-        Person student(TN, TS, THW, TE, 0);
-        student.calculateGrade(choice);
-        arr.push_back(student);
+    try {
+        generateRandomData(filename, numStudents);
+    } catch (const exception& e) {
+        cerr << "Error generating data: " << e.what() << endl;
+        return 1;
     }
 
-    cout << "Name       Surname       Final_Point" << endl;
-    cout << "------------------------------------" << endl;
-    for (auto &var : arr) {
-        var.printPerson();
+    vector<Person> studentsVector;
+    list<Person> studentsList;
+    deque<Person> studentsDeque;
+
+    try {
+        readDataFromFile(filename, studentsVector);
+    } catch (const exception& e) {
+        cerr << "Error reading data: " << e.what() << endl;
+        return 1;
     }
 
+    for (auto& student : studentsVector) {
+        student.calculateGrade('A');
+    }
+
+    vector<Person> passedVector, failedVector;
+    list<Person> passedList, failedList;
+    deque<Person> passedDeque, failedDeque;
+
+
+    cout << "Strategy 1 (Splitting into two containers):" << endl;
+
+    auto startVector = chrono::high_resolution_clock::now();
+    strategy1(studentsVector, passedVector, failedVector);
+    auto endVector = chrono::high_resolution_clock::now();
+    cout << "Time (Vector): " << chrono::duration_cast<chrono::nanoseconds>(endVector - startVector).count() << " ms" << endl;
+
+    auto startList = chrono::high_resolution_clock::now();
+    strategy1(studentsList, passedList, failedList);
+    auto endList = chrono::high_resolution_clock::now();
+    cout << "Time (List): " << chrono::duration_cast<chrono::nanoseconds>(endList - startList).count() << " ms" << endl;
+
+    auto startDeque = chrono::high_resolution_clock::now();
+    strategy1(studentsDeque, passedDeque, failedDeque);
+    auto endDeque = chrono::high_resolution_clock::now();
+    cout << "Time (Deque): " << chrono::duration_cast<chrono::nanoseconds>(endDeque - startDeque).count() << " ms" << endl;
+
+    vector<Person> failedVector2;
+    list<Person> failedList2;
+    deque<Person> failedDeque2;
+
+    cout << "Strategy 2 (Splitting into one container):" << endl;
+
+    auto startVector2 = chrono::high_resolution_clock::now();
+    strategy2(studentsVector, failedVector2);
+    auto endVector2 = chrono::high_resolution_clock::now();
+    cout << "Time (Vector): " << chrono::duration_cast<chrono::nanoseconds>(endVector2 - startVector2).count() << " ms" << endl;
+
+    auto startList2 = chrono::high_resolution_clock::now();
+    strategy2(studentsList, failedList2);
+    auto endList2 = chrono::high_resolution_clock::now();
+    cout << "Time (List): " << chrono::duration_cast<chrono::nanoseconds>(endList2 - startList2).count() << " ms" << endl;
+
+    auto startDeque2 = chrono::high_resolution_clock::now();
+    strategy2(studentsDeque, failedDeque2);
+    auto endDeque2 = chrono::high_resolution_clock::now();
+    cout << "Time (Deque): " << chrono::duration_cast<chrono::nanoseconds>(endDeque2 - startDeque2).count() << " ms" << endl;
+
+    cout << "Data processing completed!" << endl;
     return 0;
 }
