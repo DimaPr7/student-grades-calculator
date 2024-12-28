@@ -8,7 +8,6 @@ class Person {
 private:
     std::string name, surname;
     std::vector<double> HW;
-    double exam;
     double grade;
 
 public:
