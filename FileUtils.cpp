@@ -39,4 +39,3 @@ void generateRandomData(const std::string& filename, size_t numStudents) {
     file.close();
     std::cout << "Random data generated in file: " << filename << std::endl;
 }
-
