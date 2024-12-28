@@ -5,7 +5,7 @@
 
 Person::Person() : name("test"), surname("test"), exam(0), grade(0) {}
 
-Person::Person(std::string name, std::string surname, double grade)
+Person::Person(std::string name, std::string surname, std::vector<double> HW, double exam)
         : name(name), surname(surname), HW(HW), exam(exam), grade(0) {}
 
 Person::~Person() {}

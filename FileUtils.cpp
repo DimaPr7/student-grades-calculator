@@ -12,9 +12,15 @@ void readDataFromFile(const std::string& filename, std::vector<Person>& students
     }
 
     std::string name, surname;
-    float grade;
-    while (file >> name >> surname >> grade) {
-        students.emplace_back(name, surname, grade);
+    double grade, hwScore;
+    while (file >> name >> surname) {
+        std::vector<double> HW;
+        for (int i = 0; i < 5; ++i) {
+            file >> hwScore;
+            HW.push_back(hwScore);
+        }
+        file >> grade;
+        students.emplace_back(name, surname, HW, grade);
     }
 }
 
