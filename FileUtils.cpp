@@ -4,7 +4,6 @@
 #include <sstream>
 #include <random>
 
-template <typename Container>
 void readDataFromFile(const std::string& filename, std::vector<Person>& students) {
     std::ifstream file(filename);
     if (!file) {
@@ -12,15 +11,9 @@ void readDataFromFile(const std::string& filename, std::vector<Person>& students
     }
 
     std::string name, surname;
-    double grade, hwScore;
-    while (file >> name >> surname) {
-        std::vector<double> HW;
-        for (int i = 0; i < 5; ++i) {
-            file >> hwScore;
-            HW.push_back(hwScore);
-        }
-        file >> grade;
-        students.emplace_back(name, surname, HW, grade);
+    float grade;
+    while (file >> name >> surname >> grade) {
+        students.emplace_back(name, surname, std::vector<double>(), grade);
     }
 }
 
@@ -46,3 +39,4 @@ void generateRandomData(const std::string& filename, size_t numStudents) {
     file.close();
     std::cout << "Random data generated in file: " << filename << std::endl;
 }
+
