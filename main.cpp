@@ -14,30 +14,24 @@
 
 using namespace std;
 
-auto start = std::chrono::high_resolution_clock::now();
-
-
 template <typename Container>
 void strategy1(const Container& students, Container& passed, Container& failed) {
-    for (const auto& student : students) {
-        if (student.getGrade() >= 5.0) {
-            passed.push_back(student);
-        } else {
-            failed.push_back(student);
-        }
-    }
+    std::copy_if(students.begin(), students.end(), std::back_inserter(passed),
+                 [](const Person& student) { return student.getGrade() >= 5.0; });
+    std::copy_if(students.begin(), students.end(), std::back_inserter(failed),
+                 [](const Person& student) { return student.getGrade() < 5.0; });
 }
 
 template <typename Container>
 void strategy2(Container& students, Container& failed) {
-    auto it = remove_if(students.begin(), students.end(),
-                        [&](const Person& student) {
-                            if (student.getGrade() < 5.0) {
-                                failed.push_back(student);
-                                return true;
-                            }
-                            return false;
-                        });
+    auto it = std::remove_if(students.begin(), students.end(),
+                             [&](const Person& student) {
+                                 if (student.getGrade() < 5.0) {
+                                     failed.push_back(student);
+                                     return true;
+                                 }
+                                 return false;
+                             });
     students.erase(it, students.end());
 }
 
@@ -64,53 +58,52 @@ int main() {
         return 1;
     }
 
+    for (auto& student : studentsVector) {
+        student.calculateGrade('A');
+    }
+
     vector<Person> passedVector, failedVector;
     list<Person> passedList, failedList;
     deque<Person> passedDeque, failedDeque;
-    cout << "Data loaded from file:" << endl;
-    for (const auto& student : studentsVector) {
-        student.printPerson();
-    }
+
 
     cout << "Strategy 1 (Splitting into two containers):" << endl;
 
-    auto start = chrono::high_resolution_clock::now();
+    auto startVector = chrono::high_resolution_clock::now();
     strategy1(studentsVector, passedVector, failedVector);
-    auto end = chrono::high_resolution_clock::now();
-    cout << "Time (Vector): " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " µs" << endl;
+    auto endVector = chrono::high_resolution_clock::now();
+    cout << "Time (Vector): " << chrono::duration_cast<chrono::nanoseconds>(endVector - startVector).count() << " ms" << endl;
 
-
-    start = chrono::high_resolution_clock::now();
+    auto startList = chrono::high_resolution_clock::now();
     strategy1(studentsList, passedList, failedList);
-    end = chrono::high_resolution_clock::now();
-    cout << "Time (List): " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " ms" << endl;
+    auto endList = chrono::high_resolution_clock::now();
+    cout << "Time (List): " << chrono::duration_cast<chrono::nanoseconds>(endList - startList).count() << " ms" << endl;
 
-    start = chrono::high_resolution_clock::now();
+    auto startDeque = chrono::high_resolution_clock::now();
     strategy1(studentsDeque, passedDeque, failedDeque);
-    end = chrono::high_resolution_clock::now();
-    cout << "Time (Deque): " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " ms" << endl;
+    auto endDeque = chrono::high_resolution_clock::now();
+    cout << "Time (Deque): " << chrono::duration_cast<chrono::nanoseconds>(endDeque - startDeque).count() << " ms" << endl;
 
-    // Strategy 2: Separate students into one container and shrink the original
     vector<Person> failedVector2;
     list<Person> failedList2;
     deque<Person> failedDeque2;
 
     cout << "Strategy 2 (Splitting into one container):" << endl;
 
-    start = chrono::high_resolution_clock::now();
+    auto startVector2 = chrono::high_resolution_clock::now();
     strategy2(studentsVector, failedVector2);
-    end = chrono::high_resolution_clock::now();
-    cout << "Time (Vector): " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " ms" << endl;
+    auto endVector2 = chrono::high_resolution_clock::now();
+    cout << "Time (Vector): " << chrono::duration_cast<chrono::nanoseconds>(endVector2 - startVector2).count() << " ms" << endl;
 
-    start = chrono::high_resolution_clock::now();
+    auto startList2 = chrono::high_resolution_clock::now();
     strategy2(studentsList, failedList2);
-    end = chrono::high_resolution_clock::now();
-    cout << "Time (List): " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " ms" << endl;
+    auto endList2 = chrono::high_resolution_clock::now();
+    cout << "Time (List): " << chrono::duration_cast<chrono::nanoseconds>(endList2 - startList2).count() << " ms" << endl;
 
-    start = chrono::high_resolution_clock::now();
+    auto startDeque2 = chrono::high_resolution_clock::now();
     strategy2(studentsDeque, failedDeque2);
-    end = chrono::high_resolution_clock::now();
-    cout << "Time (Deque): " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " ms" << endl;
+    auto endDeque2 = chrono::high_resolution_clock::now();
+    cout << "Time (Deque): " << chrono::duration_cast<chrono::nanoseconds>(endDeque2 - startDeque2).count() << " ms" << endl;
 
     cout << "Data processing completed!" << endl;
     return 0;
